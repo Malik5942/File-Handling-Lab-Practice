@@ -1,0 +1,22 @@
+form {
+    /* border-style: solid; */
+    padding-left: 50%;
+    padding-right: 50%;
+    border: 1px;
+}
+div{
+    align-items: center;
+    align-content: center;
+  padding-left: 50%;
+}
+/* #button1{
+    background: skyblue;
+    border-radius: 2px;
+    padding: 2px;
+}
+#button2{
+    background: greenyellow;
+}
+#button3{
+    background: rgb(236, 84, 84);
+} */

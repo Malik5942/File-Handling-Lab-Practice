@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" width=device-width>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="style.css" /> -->
+    <title>Front End File</title>
+</head>
+<body>
+    <form action="/getAllUsers" method="GET">
+        Name:<input type="text" name="username" id="usernameField" placeholder="Enter User Name"><br />
+        Password:<input type="text" name="password" id="passwordField" placeholder="Enter Password">
+</form><br />
+<div>
+    <button id="button1" onclick="getUsers()">Get Users</button> 
+    <button id="button2" onclick="addUser()">Create a User</button> 
+    <!-- <button id="button3">Delete a User</button> -->
+
+    <hr> 
+
+    <button id="button4" onclick="createFile()">Create File</button> 
+    <button id="button5" onclick="readFile()">Read File </button> 
+    <button id="button6" onclick="updateFile()">Update File </button> 
+    <button id="button7" onclick="deleteFile()">Delete File</button>
+    <hr>
+    Data from file:
+    <div id="demo">abcd</div> 
+
+    <script>
+function getUsers() {
+    fetch('http://localhost:4000/getAllUsers')
+        .then((res)=> res.json() )
+        .then((message)=> console.log( message ) )
+        .catch((error)=> console.log( error ) )
+
+    }
+
+    function addUser(){
+        var options = {
+           method: 'POST',
+           body: JSON.stringify({username: usernameField.value, password: passwordField.value}),
+           headers: {
+               'Content-Type': 'application/Json'
+           } 
+        }
+        fetch('http://localhost:4000/addUser' , options)
+        .then((res)=> res.text() )
+        .then((message)=> console.log( message ) )
+        .catch((error)=> console.log( error ) )
+
+    }
+
+function createFile(){
+    var options = {
+           method: 'POST',
+           body: JSON.stringify({}),
+           headers: {
+               'Content-Type': 'application/Json'
+           } 
+        }
+        fetch('http://localhost:4000/createFile' , options)
+        .then((res)=> res.text() )
+        .then((message)=> console.log( message ) )
+        .catch((error)=> console.log( error ) )
+}
+
+function readFile(){
+    fetch('http://localhost:4000/getData')
+        .then((res)=> res.text() )
+        .then((data) => {
+        console.log( data ) 
+        document.getElementById('demo').innerHTML = data
+        })
+        .catch((error)=> console.log( error ) )
+}
+
+function updateFile(){
+    fetch('http://localhost:4000/updateFile')
+        .then((res)=> res.text() )
+        .then((data) => {
+        console.log( data ) 
+        document.getElementById('demo').innerHTML = data
+        })
+        .catch((error)=> console.log( error ) )
+}
+
+</script>
+</div>  
+</body>
+</html>
