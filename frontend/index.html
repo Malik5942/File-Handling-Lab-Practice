@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- https://github.com/expressjs/multer -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content=" width=device-width>, initial-scale=1.0">
@@ -25,7 +26,12 @@
     <button id="button7" onclick="deleteFile()">Delete File</button>
     <hr>
     Data from file:
-    <div id="demo">abcd</div> 
+    <div id="demo"></div> 
+    <hr>
+    <form action="/profile" method="POST" enctype="multipart/form-data">
+    <input type="file" name="profilePicture" multiple />
+    <input type="submit" value="Upload Picture">
+    </form>
 
     <script>
 function getUsers() {
@@ -83,6 +89,20 @@ function updateFile(){
         document.getElementById('demo').innerHTML = data
         })
         .catch((error)=> console.log( error ) )
+}
+
+function deleteFile(){
+    var options = {
+           method: 'DELETE',
+           body: JSON.stringify({}),
+           headers: {
+               'Content-Type': 'application/Json'
+           } 
+        }
+        fetch('http://localhost:4050/deleteFile' , options)
+        .then((res)=> res.text() )
+        .then((message)=> console.log( message ) )
+        .catch((error)=> console.log( error ) )   
 }
 
 </script>

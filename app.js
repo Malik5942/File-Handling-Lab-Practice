@@ -1,6 +1,24 @@
 var express = require('express');
 var bodyParser = require("body-parser")
 var fs = require('fs')
+var multer = require('multer')
+
+var customConfig = multer.diskStorage({
+    destination: function (req, res, next) {
+        next(null, './uploads')
+    },
+    filename: function (req, file, next) {
+        
+        // next(null, file.originalname)
+
+        next(null, Math.random() + '-' +file.originalname)
+    }
+})
+
+// var upload = multer({dest: 'upload/'})
+
+var upload = multer({storage: customConfig})
+
 var server = express();
 
 server.use(bodyParser.urlencoded())
@@ -37,27 +55,58 @@ server.post('/createFile', (req, res)=>{
 
 server.get('/updateFile', (req, res)=>{
     fs.appendFile('myfiles/myNewfile.txt', "Hello Everyone  once again" + '\r\n', function (err){
-        if(err) throw err;
-           res.send('File successfully updated')
+        if(err) {
+             next (err);
+        }else{
+
+            res.send('File successfully updated')
+        }
     });
  })
                 
 
         
 
-server.get('/getData', (req, res)=>{
+server.get('/getData', (req, res, next)=>{
     fs.readFile("myfiles/mynewfile.txt", 'utf8', function (err, data) {
-if (err) throw err;
-res.send(data)
-     });
+if (err){
+    next (err);
+}else{
+
+    res.send(data)
+}
+    
+    });
 })
 
 
-server.delete('/deleteFile', (req, res)=>{
-    fs.unlink('myNewfile2.txt', function (err){
-    if (err) throw err;
-    res.send('File is successfully deleted')
+server.delete('/deleteFile', (req, res, next)=>{
+    fs.unlink('myfiles/myNewfile.txt', function (err){
+    if (err){
+
+        next(err)
+
+    }else{
+        res.send('File is successfully deleted')
+    }
     });
+})
+
+server.use((err, req, res, next) =>{
+    console.log(err)
+    // res.status(500).send(err.message)
+
+    res.status(500).send('Something wrong with server')
+})
+
+// server.post('/profile', upload.single('profilePicture'), function (req, res, next){
+//     console.log(req.file)
+//      res.send('File successfully uploaded')
+// })
+
+server.post('/profile', upload.array('profilePicture', 10), function (req, res, next){
+    console.log(req.file)
+     res.send('File successfully uploaded')
 })
 
 server.get('/', (req, res)=>{
