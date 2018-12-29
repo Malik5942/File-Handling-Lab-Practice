@@ -29,7 +29,7 @@
 
     <script>
 function getUsers() {
-    fetch('http://localhost:4000/getAllUsers')
+    fetch('http://localhost:4050/getAllUsers')
         .then((res)=> res.json() )
         .then((message)=> console.log( message ) )
         .catch((error)=> console.log( error ) )
@@ -44,7 +44,7 @@ function getUsers() {
                'Content-Type': 'application/Json'
            } 
         }
-        fetch('http://localhost:4000/addUser' , options)
+        fetch('http://localhost:4050/addUser' , options)
         .then((res)=> res.text() )
         .then((message)=> console.log( message ) )
         .catch((error)=> console.log( error ) )
@@ -59,14 +59,14 @@ function createFile(){
                'Content-Type': 'application/Json'
            } 
         }
-        fetch('http://localhost:4000/createFile' , options)
+        fetch('http://localhost:4050/createFile' , options)
         .then((res)=> res.text() )
         .then((message)=> console.log( message ) )
         .catch((error)=> console.log( error ) )
 }
 
 function readFile(){
-    fetch('http://localhost:4000/getData')
+    fetch('http://localhost:4050/getData')
         .then((res)=> res.text() )
         .then((data) => {
         console.log( data ) 
@@ -76,7 +76,7 @@ function readFile(){
 }
 
 function updateFile(){
-    fetch('http://localhost:4000/updateFile')
+    fetch('http://localhost:4050/updateFile')
         .then((res)=> res.text() )
         .then((data) => {
         console.log( data ) 

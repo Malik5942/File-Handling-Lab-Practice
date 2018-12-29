@@ -64,4 +64,4 @@ server.get('/', (req, res)=>{
 
     res.send("My server is Ready to use")
 
-}).listen(4000, ()=>{console.log("Server is successfully started")})
+}).listen(4050, ()=>{console.log("Server is successfully started")})
